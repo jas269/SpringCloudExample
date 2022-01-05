@@ -1,0 +1,26 @@
+server:
+  port: 8803
+spring:
+  application:
+    name: gatewayservice
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://userservice
+          predicates:
+            - Path=/users/**
+        - id: product-details
+          uri: lb://productdetails
+          predicates:
+            - Path=/products/**
+        - id: place-order
+          uri: lb://placeorder
+          predicates:
+            - Path=/placeorder/**
+eureka:
+   client:
+     service-url:
+       defaultZone: http://localhost:8761/eureka
+   instance:
+     hostname: localhost
